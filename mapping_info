@@ -1,0 +1,63 @@
+#!/bin/usr/env python  
+from __future__ import print_function  
+
+import re  
+
+import os
+
+import sys
+  
+  
+filename = sys.argv[1] # input filename
+
+# Name of the columns
+
+print("Sample_id" + " " + "Total_number_of_reads" + " " +  "Secondary" + " " + "supplementary" + " " + "duplicates" + " " +  "mapped" + " " + "paired_in_sequencing" + " " + "read1" + " " + "read2" + " " + "properly_paired" + " " + "with_itself_and_mate_mapped" + " " + "singletons" + " " + "with_mate_mapped_to_a_different_chr" + " " + "mate_mapped_to_a_different_chr_(mapQ>=5)")  
+
+# Extract information from the input file
+
+for line in open(filename):   
+    if "total" in line:      
+        total = re.findall(r'(\d+)', line)    
+        total = ''.join(total)         
+    if "secondary" in line:
+        secondary = re.findall(r'(\d+)', line)
+        secondary = ''.join(secondary) 
+    if "supplementary" in line:
+        supplementary = re.findall(r'(\d+)', line)
+        supplementary = ''.join(supplementary) 
+    if "duplicates" in line:
+        duplicates = re.findall(r'(\d+)', line)
+        duplicates = ''.join(duplicates) 
+    if "mapped (" in line: 
+        mapped = re.findall(r'(^\d+)', line)
+        mapped = ''.join(mapped)  
+    if "paired in sequencing" in line:    
+        paired_seq = re.findall(r'(^\d+)', line)
+        paired_seq = ''.join(paired_seq)   
+    if "read1" in line: 
+        read1 = re.findall(r'(^\d+)', line)
+        read1 = ''.join(read1)  
+    if "read2" in line:
+        read2 = re.findall(r'(^\d+)', line)
+        read2 = ''.join(read2) 
+    if "properly paired" in line:
+        properly_paired = re.findall(r'(^\d+)', line)
+        properly_paired = ''.join(properly_paired)
+    if "with itself and mate mapped" in line: 
+        mate_mapped = re.findall(r'(^\d+)', line)
+        mate_mapped = ''.join(mate_mapped) 
+    if "singletons" in line:
+        singletons = re.findall(r'(^\d+)', line)
+        singletons = ''.join(singletons) 
+    if "with mate mapped to a different chr" in line: 
+        mapped_chr = re.findall(r'(^\d+)', line)
+        mapped_chr = ''.join(mapped_chr)
+    if "mate mapped to a different chr (mapQ>=5)" in line: 
+        mapped_chr5 = re.findall(r'(^\d+)', line)
+        mapped_chr5 = ''.join(mapped_chr5)   
+    if "flagstat_out.txt" in line:
+        sample_id = re.findall(r'(^[A-Z]+|\d+)', line)
+        sample_id = ''.join(sample_id)
+        print(sample_id + " " + total + " " + secondary + " " + supplementary + " " + duplicates + " " + mapped + " " + paired_seq + " " + read1 + " " + read2 + " " + properly_paired + " " + mate_mapped + " " + singletons + " " + mapped_chr + " " + mapped_chr5)
+
